@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.OpenApi.Models;
 using slack_api_1.Data;
+using slack_api_1.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +38,34 @@ app.UseDeveloperExceptionPage();
 app.UseRouting();
 app.UseAuthorization();
 
-app.MapControllers();
+// Seed data
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<SlackContext>();
+
+    var slack_name = "Whitesama";
+    var track = "backend";
+    DateTime currentDate = DateTime.Now;
+    DayOfWeek currentDayOfWeek = currentDate.DayOfWeek;
+    string dayOfWeekString = currentDayOfWeek.ToString();
+    DateTime utcDateTime = DateTime.UtcNow;
+    string formattedUtcDateTime = utcDateTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
+
+    if (!context.slackData.Any())
+    {
+        context.slackData.Add(new slackModel
+        {
+            slack_name = slack_name,
+            current_day = dayOfWeekString,
+            utc_time = formattedUtcDateTime,
+            track = track,
+            github_file_url = "https://github.com/whiteSama001/zuri-slack-api/blob/main/Program.cs",
+            github_repo_url = "https://github.com/whiteSama001/zuri-slack-api",
+            status_code = 200,
+        });
+        context.SaveChanges();
+    }
+}
 
 app.Run();
