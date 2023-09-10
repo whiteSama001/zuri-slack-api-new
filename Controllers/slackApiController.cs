@@ -15,7 +15,7 @@ namespace slack_api_1.Controllers
         public slackApiController(SlackContext context)
         {
             _context = context;
-            SeedData(); 
+          //  SeedData(); 
         }
 
         [HttpGet]
@@ -43,7 +43,7 @@ namespace slack_api_1.Controllers
             return slackData;
         }
 
-        private void SeedData()
+     /*   private void SeedData()
         {
             var slack_name = "Whitesama";
             var track = "backend";
@@ -67,6 +67,6 @@ namespace slack_api_1.Controllers
                 });
                 _context.SaveChanges();
             }
-        }
+        }*/
     }
 }
