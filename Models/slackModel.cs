@@ -1,8 +1,12 @@
-﻿namespace slack_api_1.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace slack_api_1.Models
 {
     public class slackModel
     {
-        public long Id { get; set; }
+       
+        public int Id { get; set; }
+
         public string slack_name { get; set; }
         public string current_day { get; set; }
 

@@ -19,11 +19,21 @@ namespace slack_api_1.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<slackModel>> GetSlackData(string slack_name, string track)
+        public async Task<ActionResult<slackModelResponse>> GetSlackData(string slack_name, string track)
         {
-
             var slackData = await _context.slackData
-                .FirstOrDefaultAsync(s => s.slack_name == slack_name && s.track == track);
+                .Where(s => s.slack_name == slack_name && s.track == track)
+                .Select(s => new slackModelResponse
+                {
+                    slack_name = s.slack_name,
+                    current_day = s.current_day,
+                    utc_time = s.utc_time,
+                    track = s.track,
+                    github_file_url = s.github_file_url,
+                    github_repo_url = s.github_repo_url,
+                    status_code = s.status_code
+                })
+                .FirstOrDefaultAsync();
 
             if (slackData == null)
             {

@@ -17,7 +17,7 @@ namespace slack_api_1.Data
         {
             // Configure entity relationships, indexes, and other database-specific settings here
 
-            // Example: modelBuilder.Entity<EntityName>().HasKey(e => e.Id);
+            // Example: modelBuilder.Entity<EntityName>().HasNoKey(e => e.Id);
         }
     }
 }
